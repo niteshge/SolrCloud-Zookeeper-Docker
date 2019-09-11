@@ -11,8 +11,6 @@ services:
     environment:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2182 server.3=zoo3:2888:3888;2183
-      ZOO_LOG_DIR: /opt/persist/logs
-      ZOO_DATA_LOG_DIR: /opt/persist/data
     networks:
       - zookeeper-solr
 
@@ -21,14 +19,12 @@ services:
     restart: always
     hostname: zoo2
     ports:
-      - 2182:2182
+      - 2182:2181
     volumes:
       - ./data/zoo3:/opt/persist
     environment:
       ZOO_MY_ID: 2
       ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=0.0.0.0:2888:3888;2182 server.3=zoo3:2888:3888;2183
-      ZOO_LOG_DIR: /opt/persist/logs
-      ZOO_DATA_LOG_DIR: /opt/persist/data
     networks:
       - zookeeper-solr
 
@@ -37,96 +33,14 @@ services:
     restart: always
     hostname: zoo3
     ports:
-      - 2183:2183
+      - 2183:2181
     volumes:
       - ./data/zoo3:/opt/persist
     environment:
       ZOO_MY_ID: 3
       ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2182 server.3=0.0.0.0:2888:3888;2183
-      ZOO_LOG_DIR: /opt/persist/logs
-      ZOO_DATA_LOG_DIR: /opt/persist/data
     networks:
       - zookeeper-solr
-
-
-  solr1:
-    container_name: solr1
-    image: solr
-    ports:
-      - 8981:8981
-    volumes:
-      - ./data/solr1:/opt/solr/server/solr/mycores
-      - ./data/solr1/logs:/opt/logs
-      - ./data/solr1/store:/store
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2182,zoo3:2183
-      - -a
-      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
-    depends_on:
-      - zoo1
-      - zoo2
-      - zoo3
-    networks:
-      - zookeeper-solr
-    
-  solr2:
-    container_name: solr2
-    image: solr
-    ports:
-      - 8982:8982
-    volumes:
-      - ./data/solr2:/opt/solr/server/solr/mycores
-      - ./data/solr2/logs:/opt/logs
-      - ./data/solr2/store:/store
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2182,zoo3:2183
-      - -a
-      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
-    depends_on:
-      - zoo1
-      - zoo2
-      - zoo3
-    networks:
-      - zookeeper-solr
-
-  solr3:
-    image: solr
-    container_name: solr3
-    ports:
-      - 8983:8983
-    volumes:
-      - ./data/solr3:/opt/solr/server/solr/mycores
-      - ./data/solr3/logs:/opt/logs
-      - ./data/solr3/store:/store
-    entrypoint:
-      - docker-entrypoint.sh
-      - solr
-      - start
-      - -f
-      - -c
-      - -z
-      - zoo1:2181,zoo2:2182,zoo3:2183
-      - -a
-      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
-    depends_on:
-      - zoo1
-      - zoo2
-      - zoo3
-    networks:
-      - zookeeper-solr
-
 
 networks:
   zookeeper-solr:
