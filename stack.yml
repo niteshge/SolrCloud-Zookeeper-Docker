@@ -73,6 +73,9 @@ services:
       - ./data/solr1/logs:/opt/logs
       - ./data/solr1/store:/store
     entrypoint:
+      - bash
+      - "-c"
+      - "precreate-core core1; precreate-core core2; exec solr -f"
       - solr
       - start
       - -f
@@ -98,6 +101,9 @@ services:
       - ./data/solr2/logs:/opt/logs
       - ./data/solr2/store:/store
     entrypoint:
+      - bash
+      - "-c"
+      - "precreate-core core1; precreate-core core2; exec solr -f"
       - solr
       - start
       - -f
@@ -123,6 +129,9 @@ services:
       - ./data/solr3/logs:/opt/logs
       - ./data/solr3/store:/store
     entrypoint:
+      - bash
+      - "-c"
+      - "precreate-core core1; precreate-core core2; exec solr -f"
       - solr
       - start
       - -f
