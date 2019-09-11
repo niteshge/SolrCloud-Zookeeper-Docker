@@ -42,45 +42,49 @@ services:
     networks:
       - zookeeper-solr
 
-  solr-1:
+  solr1:
+    container_name: solr1
     image: solr
-    restart: always
     ports:
-        - 8981:8981
+      - 8981:8981
     volumes:
-      - ./data/solr-1/logs:/opt/logs
-      - ./data/solr-1/store:/store
-    environment:
-      SOLR_PORT: 8981
-      SOLR_HOME: /store/solr
-      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
-      SOLR_LOGS_DIR: /opt/logs
-      SOLR_HOST: solr-1
-      SOLR_HEAP:
-      SOLR_JAVA_MEM:
+      - ./data/solr1:/opt/solr/server/solr/mycores
+      - ./data/solr1/logs:/opt/logs
+      - ./data/solr1/store:/store
+    entrypoint:
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2182,zoo3:2183
+      - -a
+      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     depends_on:
       - zoo1
       - zoo2
       - zoo3
     networks:
       - zookeeper-solr
-
-  solr-2:
+    
+  solr2:
+    container_name: solr2
     image: solr
-    restart: always
     ports:
       - 8982:8982
     volumes:
-      - ./data/solr-2/logs:/opt/logs
-      - ./data/solr-2/store:/store
-    environment:
-      SOLR_PORT: 8982
-      SOLR_HOME: /store/solr
-      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
-      SOLR_LOGS_DIR: /opt/logs
-      SOLR_HOST: solr-2
-      SOLR_HEAP:
-      SOLR_JAVA_MEM:
+      - ./data/solr2:/opt/solr/server/solr/mycores
+      - ./data/solr2/logs:/opt/logs
+      - ./data/solr2/store:/store
+    entrypoint:
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2182,zoo3:2183
+      - -a
+      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     depends_on:
       - zoo1
       - zoo2
@@ -88,28 +92,31 @@ services:
     networks:
       - zookeeper-solr
 
-  solr-3:
+  solr3:
     image: solr
-    restart: always
+    container_name: solr3
     ports:
       - 8983:8983
     volumes:
-      - ./data/solr-3/logs:/opt/logs
-      - ./data/solr-3/store:/store
-    environment:
-      SOLR_PORT: 8983
-      SOLR_HOME: /store/solr
-      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
-      SOLR_LOGS_DIR: /opt/logs
-      SOLR_HOST: solr-3
-      SOLR_HEAP:
-      SOLR_JAVA_MEM:
+      - ./data/solr3:/opt/solr/server/solr/mycores
+      - ./data/solr3/logs:/opt/logs
+      - ./data/solr3/store:/store
+    entrypoint:
+      - solr
+      - start
+      - -f
+      - -c
+      - -z
+      - zoo1:2181,zoo2:2182,zoo3:2183
+      - -a
+      - "-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044"
     depends_on:
       - zoo1
       - zoo2
       - zoo3
     networks:
       - zookeeper-solr
+
   
 networks:
   zookeeper-solr:
