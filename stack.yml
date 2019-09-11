@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   zoo1:
-    image: zookeeper:3.4.14
+    image: zookeeper
     restart: always
     hostname: zoo1
     ports:
@@ -17,7 +17,7 @@ services:
       - zookeeper-solr
 
   zoo2:
-    image: zookeeper:3.4.14
+    image: zookeeper
     restart: always
     hostname: zoo2
     ports:
@@ -33,7 +33,7 @@ services:
       - zookeeper-solr
 
   zoo3:
-    image: zookeeper:3.4.14
+    image: zookeeper
     restart: always
     hostname: zoo3
     ports:
@@ -48,11 +48,12 @@ services:
     networks:
       - zookeeper-solr
 
+
   solr1:
     container_name: solr1
     image: solr
     ports:
-     - 8981:8981
+      - 8981:8981
     volumes:
       - ./data/solr1:/opt/solr/server/solr/mycores
       - ./data/solr1/logs:/opt/logs
@@ -78,7 +79,7 @@ services:
     container_name: solr2
     image: solr
     ports:
-     - 8982:8982
+      - 8982:8982
     volumes:
       - ./data/solr2:/opt/solr/server/solr/mycores
       - ./data/solr2/logs:/opt/logs
@@ -104,7 +105,7 @@ services:
     image: solr
     container_name: solr3
     ports:
-     - 8983:8983
+      - 8983:8983
     volumes:
       - ./data/solr3:/opt/solr/server/solr/mycores
       - ./data/solr3/logs:/opt/logs
@@ -125,6 +126,7 @@ services:
       - zoo3
     networks:
       - zookeeper-solr
+
 
 networks:
   zookeeper-solr:
