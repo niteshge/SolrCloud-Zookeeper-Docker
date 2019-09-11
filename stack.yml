@@ -42,6 +42,75 @@ services:
     networks:
       - zookeeper-solr
 
+  solr-1:
+    image: solr
+    restart: always
+    ports:
+        - 8981:8981
+    volumes:
+      - ./data/solr-1/logs:/opt/logs
+      - ./data/solr-1/store:/store
+    environment:
+      SOLR_PORT: 8981
+      SOLR_HOME: /store/solr
+      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
+      SOLR_LOGS_DIR: /opt/logs
+      SOLR_HOST: solr-1
+      SOLR_HEAP:
+      SOLR_JAVA_MEM:
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - zookeeper-solr
+
+  solr-2:
+    image: solr
+    restart: always
+    ports:
+      - 8982:8982
+    volumes:
+      - ./data/solr-2/logs:/opt/logs
+      - ./data/solr-2/store:/store
+    environment:
+      SOLR_PORT: 8982
+      SOLR_HOME: /store/solr
+      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
+      SOLR_LOGS_DIR: /opt/logs
+      SOLR_HOST: solr-2
+      SOLR_HEAP:
+      SOLR_JAVA_MEM:
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - zookeeper-solr
+
+  solr-3:
+    image: solr
+    restart: always
+    ports:
+      - 8983:8983
+    volumes:
+      - ./data/solr-3/logs:/opt/logs
+      - ./data/solr-3/store:/store
+    environment:
+      SOLR_PORT: 8983
+      SOLR_HOME: /store/solr
+      ZK_HOST: zoo1:2181,zoo2:2182,zoo3:2183
+      SOLR_LOGS_DIR: /opt/logs
+      SOLR_HOST: solr-3
+      SOLR_HEAP:
+      SOLR_JAVA_MEM:
+    depends_on:
+      - zoo1
+      - zoo2
+      - zoo3
+    networks:
+      - zookeeper-solr
+  
 networks:
   zookeeper-solr:
     driver: bridge
