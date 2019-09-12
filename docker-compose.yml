@@ -65,7 +65,7 @@ services:
 
   solr1:
     container_name: solr1
-    image: solr-offcial:dev
+    image: solr-1ws:dev
     ports:
       - 8981:8981
     volumes:
@@ -90,7 +90,7 @@ services:
     
   solr2:
     container_name: solr2
-    image: solr-offcial:dev
+    image: solr-1ws:dev
     ports:
       - 8982:8982
     volumes:
@@ -114,7 +114,7 @@ services:
       - zookeeper-solr
 
   solr3:
-    image: solr-offcial:dev
+    image: solr-1ws:dev
     container_name: solr3
     ports:
       - 8983:8983
