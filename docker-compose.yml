@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   zoo1:
-    image: zookeeper-offcial:dev
+    image: zookeeper-1ws:dev
     restart: always
     hostname: zoo1
     ports:
@@ -22,7 +22,7 @@ services:
       - zookeeper-solr
 
   zoo2:
-    image: zookeeper-offcial:dev
+    image: zookeeper-1ws:dev
     restart: always
     hostname: zoo2
     ports:
@@ -43,7 +43,7 @@ services:
       - zookeeper-solr
 
   zoo3:
-    image: zookeeper-offcial:dev
+    image: zookeeper-1ws:dev
     restart: always
     hostname: zoo3
     ports:

@@ -61,6 +61,8 @@ EXPOSE 2181 2888 3888 8080
 ENV PATH=$PATH:/$DISTRO_NAME/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
 
-COPY --chown=0:0 ./docker-entrypoint.sh /
+COPY docker-entrypoint.sh /
+RUN  chmod -R 777 /docker-entrypoint.sh 
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["zkServer.sh", "start-foreground"]
